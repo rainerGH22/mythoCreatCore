@@ -1,7 +1,7 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
 	"$comment": "Created by Rainer Cramm",
-	"$id": "http://uri-to-MCC-webpage/v1.2/MythoCreatCore-v1.2.2.json",
+	"$id": "https://github.com/rainerGH22/mythoCreatCore/tree/main/v.1.2/MythoCreatCore-v1.2.2.json",
     "version": "1.2.2",
 	"title": "Mythology Creature Core",    
     "description": "JSON representation of the Mythology Creature Core Metadata System",	
