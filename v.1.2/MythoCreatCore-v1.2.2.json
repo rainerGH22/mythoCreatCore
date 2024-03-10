@@ -1,0 +1,659 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$comment": "Created by Rainer Cramm",
+	"$id": "http://uri-to-MCC-webpage/v1.2/MythoCreatCore-v1.2.2.json",
+    "version": "1.2.2",
+	"title": "Mythology Creature Core",    
+    "description": "JSON representation of the Mythology Creature Core Metadata System",	
+    "type": "object",
+	"definitions": {
+        "affiliations": {
+            "items": {
+                "properties": {
+                    "affiliationIdentifier": {
+                        "format": "uri",
+                        "type": "string"
+                    },
+                    "affiliationIdentifierScheme": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "schemeUri": {
+                        "format": "uri",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "name"
+                ],
+                "type": "object"
+            },
+            "type": "array",
+            "uniqueItems": true
+        },
+        "location": {
+            "comment": "see: https://schema.org/location",
+            "properties": {
+                "address": {
+                    "properties": {
+                        "addressLocality": {
+                            "examples": "Philadelphia",
+                            "type": "string"
+                        },
+                        "addressRegion": {
+                            "examples": "PA",
+                            "type": "string"
+                        },
+                        "addressType": {
+                            "$ref": "#/definitions/typeAddressType"
+                        }
+                    },
+                    "type": "object"
+                },
+                "url": {
+                    "format": "uri",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "nameIdentifiers": {
+            "items": {
+                "properties": {
+                    "nameIdentifier": {
+                        "format": "uri",
+                        "type": "string"
+                    },
+                    "nameIdentifierScheme": {
+                        "type": "string"
+                    },
+                    "schemeUri": {
+                        "format": "uri",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "nameIdentifier",
+                    "nameIdentifierScheme"
+                ],
+                "type": "object"
+            },
+            "type": "array",
+            "uniqueItems": true
+        },
+        "propertyRating": {
+            "description": "CV für Anwesenheit von Merkmalen",
+            "enum": [
+                "no",
+                "yes",
+                "contradictory",
+                "notMentioned",
+                "unkonwn"
+            ],
+            "type": "string"
+        },
+        "typeAddressType": {
+            "comment": "see: https://schema.org/location",
+            "enum": [
+                "Place",
+                "PostalAddress",
+                "Text",
+                "VirtualLocation"
+            ],
+            "type": "string"
+        },
+        "typeAlias": {
+            "$comment": "Refers to myontCreatures Ontology (name -> lemma, xrefid -> figID)",
+            "description": "Cross-reference to a lemma",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "xrefID": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "typeContributorType": {
+            "enum": [
+                "ContactPerson",
+                "DataCollector",
+                "Distributor",
+                "Editor",
+                "HostingInstitution",
+                "Illustrator",
+                "OriginalAuthor",
+                "RelatedPerson",
+                "RightsHolder",
+                "Sponsor",
+                "Other"
+            ],
+            "type": "string"
+        },
+        "typeDataFormat": {
+            "description": "Format der Data Sektion",
+            "enum": [
+                "Plain",
+                "XML"
+            ],
+            "type": "string"
+        },
+        "typeDistributionType": {
+            "enum": [
+                "Physical print",
+                "Scanned text",
+                "E-book",
+                "Website"
+            ],
+            "type": "string"
+        },
+        "typeFormType": {
+            "enum": [
+                "unknown",
+                "humanoid",
+                "animal-like",
+                "hybrid (human-animal)",
+                "chimera (mixed-animal",
+                "disembodied (ghost)"
+            ],
+            "type": "string"
+        },
+        "typeLanguage": {
+            "comment": "Controlled subset to restrict number and allow relevant selections",
+            "description": "Laguage tags from IETF BCP 47, ISO 639-1 (+ ISO 639-x) language codes.",
+            "enum": [
+                "de-DE_Hochdeutsch modern",
+                "de-x-mundart_Deutsche Mundart",
+                "de-ahd_Althochdeutsch",
+                "de-gmh_Mittelhochdeutsch",
+                "de-gml_Mittelniederdeutsch",
+                "en-EN_Modern English",
+                "en-ang_Old English",
+                "fr-FR_Modern French",
+                "fr-fro_Old French"
+            ],
+            "type": "string"
+        },
+        "typeNameType": {
+            "enum": [
+                "Organizational",
+                "Personal"
+            ],
+            "type": "string"
+        },
+        "typeNarrationType": {
+            "enum": [
+                "report",
+                "retelling",
+                "summary",
+                "interpretation",
+                "citation",
+                "comment"
+            ],
+            "type": "string"
+        },
+        "typeTextType": {
+            "enum": [
+                "story",
+                "saying",
+                "song",
+                "spell",
+                "ritual"
+            ],
+            "type": "string"
+        },
+        "typeObservationType": {
+            "enum": [
+                "Actor observation",
+                "Uninvolved observation",
+                "Secret observation",
+                "Indirect observation"
+            ],
+            "type": "string"
+        },
+        "typeSourceType": {
+            "enum": [
+                "Field study",
+                "Edition",
+                "Collection"
+            ],
+            "type": "string"
+        },
+        "typeWikiEntry": {
+            "properties": {
+                "accessURL": {
+                    "type": "string"
+                },
+                "wkLanguage": {
+                    "$comment": "Language of the Wiki. Allowed values are taken from  IETF BCP 47, ISO 639-1 language codes.",
+                    "enum": [
+                        "de",
+                        "en",
+                        "fr",
+                        "other"
+                    ],
+                    "type": "string"
+                },
+                "wkType": {
+                    "enum": [
+                        "Wikipedia",
+                        "DigitalLIMC",
+                        "FanDom"
+                    ],
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "typeWitnessType": {
+            "enum": [
+                "Man",
+                "Woman",
+                "Child",
+                "Non-human"
+            ],
+            "type": "string"
+        }
+    },
+    "additionalProperties": false,
+    "properties": {
+        "DatasetVersion": {
+            "type": "string",
+			"§comment": "String literal for dataset versioning",
+			"examples": ["v.1.0"]
+        },
+		"creatures": {
+			"type": "array",
+			"$comment": "Array items of type mmcActor",
+			"description": "Array for all creatures that are mentioned in the corpus",
+			"items": {
+				"baseFigure": {
+					"type": "object",
+					"$comment": "Refers to the myontCreatures Ontology",
+					"description" : "Systematic classifikation of a creature character",
+					"required": [
+						"figID",
+						"figName"
+					],
+					"properties": {
+						"type": "object",
+						"figID": {
+							"type": "string",
+							"$comment": "ID in the myontCreatures ontology"
+						},
+						"figName": {
+							"properties": {
+								"lemma": {
+									"type": "string",
+									"description":"Unique standardised name of a creature figure",
+									"examples": ["Zwerg","Kobold"]
+								},
+								"alias": {
+									"items": {
+										"$ref": "#/definitions/typeAlias"
+									},
+									"type": "array"
+								}
+							},
+							"required": [
+								"lemma"
+							]
+						},
+						"wikiEntry": {
+							"$ref": "#/definitions/typeWikiEntry"
+						}
+					}
+				},
+				"character": {
+					"type": "object",
+					"description": "A character is a distinct instance of a baseFigure.",
+					"required": [
+						"appellation"
+					],
+					"properties": {
+						"appellation": {
+							"items": {
+								"type": "string"
+							},
+							"type": "array",
+							"uniqueItems": true
+						},
+						"form": {
+							"properties": {
+								"bodyColor": {
+									"items": {
+										"type": "string"
+									},
+									"type": "array",
+									"uniqueItems": true
+								},
+								"bodyFeatures": {
+									"items": {
+										"type": "string"
+									},
+									"type": "array",
+									"uniqueItems": true
+								},
+								"formType": {
+									"$ref": "#/definitions/typeFormType"
+								},
+								"looksLike": {
+									"items": {
+										"type": "string"
+									},
+									"type": "array",
+									"uniqueItems": true
+								}
+							},
+							"type": "object"
+						},
+						"identity": {
+							"$ref": "#/definitions/typeAlias"
+						}
+					}
+				},	
+				"traits": {
+					"type": "object",
+					"description": "Traits of a character",			
+					"properties": {
+						"physics": {
+							"type": "object",
+							"properties": {
+								"physMovement": {
+									"properties": {
+										"canDive": {
+											"$ref": "#/definitions/propertyRating"
+										},
+										"canFly": {
+											"$ref": "#/definitions/propertyRating"
+										},
+										"canSwim": {
+											"$ref": "#/definitions/propertyRating"
+										},
+										"canWalk": {
+											"$ref": "#/definitions/propertyRating"
+										}
+									},
+									"required": [
+									],
+									"type": "object"
+								}
+							}
+						},
+						"food": {
+							"type": "object",
+							"properties": {
+								"feeding": {
+									"$ref": "#/definitions/propertyRating"
+								},
+								"foodStuff": {
+									"items": {
+										"type": "string"
+									},
+									"type": "array",
+									"uniqueItems": true
+								},
+								"subsist": {
+									"$ref": "#/definitions/propertyRating"
+								}
+							}
+						},
+						"magic": {
+							"properties": {
+								"benevolent": {
+									"items": {
+										"type": "string"
+									},
+									"type": "array",
+									"uniqueItems": true
+								},
+								"magicAbilities": {
+									"properties": {
+										"invisible": {
+											"$ref": "#/definitions/propertyRating"
+										},
+										"shapeshifter": {
+											"$ref": "#/definitions/typeAlias"
+										},
+										"spitFire": {
+											"$ref": "#/definitions/propertyRating"
+										}
+									},
+									"type": "object"
+								},
+								"malevolent": {
+									"items": {
+										"type": "string"
+									},
+									"type": "array",
+									"uniqueItems": true
+								},
+								"summoning": {
+									"items": {
+										"type": "string"
+									},
+									"type": "array",
+									"uniqueItems": true
+								}
+							},
+							"type": "object"
+						}				
+					}
+				},
+				"observations": {
+					"type": "array",
+					"minItems": 1,
+					"uniqueItems": true,
+					"description": "Observations of a character given by the source",
+					"items": {
+						"properties": {
+							"EventDate": {
+								"description": "When did the observation took place?",
+								"type": "string"
+							},
+							"notion": {
+								"description": "Subjective impression of the observation.",
+								"type": "string"
+							},
+							"observLocation": {
+								"$ref": "#/definitions/location"
+							},
+							"observType": {
+								"$ref": "#/definitions/typeObservationType"
+							},
+							"occurrence": {
+								"description": "What has been observed?",
+								"type": "string"
+							},
+							"witnesses": {
+								"items": {
+									"properties": {
+										"name": {
+											"type": "string"
+										},
+										"profession": {
+											"type": "string"
+										},
+										"witnessType": {
+											"$ref": "#/definitions/typeWitnessType"
+										}
+									},
+									"type": "object"
+								},
+								"type": "array"
+							}
+						},
+						"type": "object"
+					}
+				}
+			} 		
+		},
+        "sourceData": {
+            "$comment": "Bibliographical metadata for text object",
+			"description": "Source metadata (e.g. a book)",
+            "type": "object",
+			"properties": {
+                "sourceType": {
+                    "$ref": "#/definitions/typeSourceType"
+                },
+                "language": {
+                    "$ref": "#/definitions/typeLanguage"
+                }, 			
+                "srcTitle": {
+                    "type": "string"
+                },
+                "srcSubtitle": {
+                    "type": "string"
+                },
+                "srcDescription": {
+                    "type": "string"
+                },				
+                "creators": {
+                    "items": {
+                        "properties": {
+                            "affiliation": {
+                                "$ref": "#/definitions/affiliations"
+                            },
+                            "familyName": {
+                                "type": "string"
+                            },
+                            "givenName": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "nameIdentifiers": {
+                                "$ref": "#/definitions/nameIdentifiers"
+                            },
+                            "nameType": {
+                                "$ref": "#/definitions/typeNameType"
+                            }
+                        },
+                        "required": [
+                            "name"
+                        ],
+                        "type": "object"
+                    },
+                    "minItems": 1,
+                    "type": "array",
+                    "uniqueItems": true
+                },
+                "contributors": {
+                    "items": {
+                        "properties": {
+                            "contributorType": {
+                                "$ref": "#/definitions/typeContributorType"
+                            },
+                            "familyName": {
+                                "type": "string"
+                            },
+                            "givenName": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "nameIdentifiers": {
+                                "$ref": "#/definitions/nameIdentifiers"
+                            },
+                            "nameType": {
+                                "$ref": "#/definitions/typeNameType"
+                            }
+                        },
+                        "required": [
+                            "contributorType",
+                            "name"
+                        ],
+                        "type": "object"
+                    },
+                    "type": "array",
+                    "uniqueItems": true
+                },
+                "publisher": {
+                    "type": "string"
+                },
+                "publicationYear": {
+                    "description": "Year this evidence was first published (= first distribution)",
+                    "format": "year",
+                    "type": "string"
+                },
+                "distributions": {
+                    "description": "Instance of this source (e.g. a scan of a book on goggle books)",
+                    "properties": {
+                        "accessionURL": {
+                            "format": "uri",
+                            "type": "string"
+                        },
+                        "dsAccessedDate": {
+                            "description": "Date of recording this instance",
+                            "format": "date",
+                            "type": "string"
+                        },
+                        "dsProvider": {
+                            "description": "A RDF ressource (e.g. https://books.google.de)",
+                            "format": "uri",
+                            "type": "string"
+                        },
+                        "dsSection": {
+                            "properties": {
+								"scLanguage": {
+									"$ref": "#/definitions/typeLanguage"									
+								},
+								"scHeading": {
+                                    "type": "string"
+                                },
+                                "scID": {
+                                    "type": "string"
+                                },
+                                "scPages": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "dsType": {
+                            "$ref": "#/definitions/typeDistributionType"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "required": [
+                "title",
+                "language",
+                "description",
+                "creators",
+                "sourceType",
+                "publicationYear",
+                "Distributions"
+            ]
+        },
+        "corpus": {
+            "$comment": "Text object in plain text and XML",
+			"type": "object",
+			"description": "Narration element (e.g. a text section of a book)",
+            "properties": {
+				"genuine": {
+                    "description": "Plain text narration element",
+                    "type": "string"
+                },
+				"plaintext": {
+                    "description": "Plain text narration element",
+                    "type": "string"
+                },
+                "xmltagged": {
+                    "description": "XML enriched narration element",
+                    "type": "string"
+                }
+            }            
+        }
+    },
+    "required": [
+        "schemaVersion",
+        "datasetVersion"
+    ]
+}
